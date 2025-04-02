@@ -9,20 +9,44 @@ volumes:
   # mail_log:
   # mail_mysql:
   document_data:
+    name: ${STACK_NAME}-onlyoffice-document_data
   document_log:
+    name: ${STACK_NAME}-onlyoffice-document_log
   document_forgotten:
+    name: ${STACK_NAME}-onlyoffice-document_forgotten
   community_mysql:
+    name: ${STACK_NAME}-onlyoffice-community_mysql
   community_data:
+    name: ${STACK_NAME}-onlyoffice-community_data
   community_log:
+    name: ${STACK_NAME}-onlyoffice-community_log
   community_letsencrypt:
+    name: ${STACK_NAME}-onlyoffice-community_letsencrypt
   controlpanel_data:
+    name: ${STACK_NAME}-onlyoffice-controlpanel_data
   controlpanel_log:
+    name: ${STACK_NAME}-onlyoffice-controlpanel_log
   mysql_data:
+    name: ${STACK_NAME}-onlyoffice-mysql_data
   # es_data:
+  
 services:
+  webdav:
+    container_name: ${STACK_NAME}-onlyoffice-webdav
+    image: derkades/webdav
+    restart: always
+    networks:
+      - green
+    environment:
+      USERNAME: onlyoffice
+      PASSWORD: ${ONLYOFFICE_WEBDAV_PASSWORD}
+    volumes:
+      - /docker/27hs/mnt/library/Documents:/data
+
   onlyoffice-mysql-server:
     container_name: ${STACK_NAME}-onlyoffice-mysql-server
     image: mysql:8.0.29
+    user: ${ONLYOFFICE_PUID}:${ONLYOFFICE_PGID}
     environment:
      - MYSQL_ROOT_PASSWORD=${ONLYOFFICE_MYSQL_ROOT_PASSWORD}
     networks:

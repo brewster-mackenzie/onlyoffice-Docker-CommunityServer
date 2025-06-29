@@ -133,7 +133,7 @@ services:
   #     - "9300"
   onlyoffice-document-server:
     container_name: ${STACK_NAME}-onlyoffice-document-server
-    image: onlyoffice/documentserver:8.1
+    image: onlyoffice/documentserver:8.3
     stdin_open: true
     tty: true
     restart: always
